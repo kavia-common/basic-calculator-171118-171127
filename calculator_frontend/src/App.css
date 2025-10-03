@@ -1,104 +1,163 @@
-/* CSS Variables for Theme Management */
+/* Ocean Professional Theme Tokens (CSS Variables) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --ocn-primary: #374151;   /* slate-700 */
+  --ocn-secondary: #9CA3AF; /* gray-400 */
+  --ocn-success: #10B981;   /* emerald-500 */
+  --ocn-error: #EF4444;     /* red-500 */
+  --ocn-background: #FFFFFF;
+  --ocn-surface: #F9FAFB;   /* gray-50 */
+  --ocn-text: #111827;      /* gray-900 */
+
+  --radius: 12px;
+  --shadow-soft: 0 8px 24px rgba(17, 24, 39, 0.08);
+  --shadow-focus: 0 0 0 4px rgba(55, 65, 81, 0.15);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
+/* Base layout */
+* { box-sizing: border-box; }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+body, #root {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--ocn-background);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+.app-shell {
   min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
+  color: var(--ocn-text);
+  padding: 24px;
+}
+
+/* Calculator wrapper */
+.calc-wrapper {
+  width: 100%;
+  max-width: 360px;
+  background: var(--ocn-surface);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 20px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 16px;
+}
+
+.calc-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  justify-content: space-between;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+.app-title {
+  margin: 0;
+  font-size: 16px;
   font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--ocn-primary);
+}
+
+/* Display */
+.display {
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 10px;
+  padding: 16px 14px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--ocn-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* Buttons */
+.btn {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  background: #fff;
+  color: var(--ocn-text);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.04s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  user-select: none;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.btn:hover {
+  border-color: rgba(17, 24, 39, 0.15);
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.06);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.btn:active {
+  transform: translateY(1px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Variants */
+.btn.operator {
+  background: var(--ocn-primary);
+  color: #fff;
+  border-color: var(--ocn-primary);
+}
+
+.btn.operator:hover {
+  filter: brightness(1.03);
+}
+
+.btn.equals {
+  background: var(--ocn-success);
+  color: #fff;
+  border-color: var(--ocn-success);
+}
+
+.btn.control {
+  color: var(--ocn-primary);
+  background: #fff;
+}
+
+/* 0 spans two columns */
+.span-2 {
+  grid-column: span 2;
+}
+
+/* Footer */
+.calc-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--ocn-secondary);
+}
+
+/* Responsive tweaks */
+@media (max-width: 380px) {
+  .calc-wrapper {
+    max-width: 320px;
+    padding: 16px;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .display {
+    font-size: 24px;
+    padding: 12px;
   }
 }
